@@ -5,13 +5,15 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var canvas;
-var palyer, playerBase, playerArcher;
-var baseimage;
+var player, playerBase;
+var playerA;
+
+
 
 function preload() {
-  backgroundImg = loadImage("background.png");
-  baseimage = loadImage("base.png");
-  playerimage = loadImage("player.png");
+  backgroundImg = loadImage("./assets/background.png");
+  baseimage = loadImage("./assets/base.png");
+  playerimage = loadImage("./assets/player.png");
 }
 
 function setup() {
@@ -19,39 +21,38 @@ function setup() {
 
   engine = Engine.create();
   world = engine.world;
+
   angleMode(DEGREES);
 
-  var options ={
+  var options = {
     isStatic: true
   };
 
-  //create player base body
-  playerBase = Bodies.rectangle(200,350,180,150,options);
-  World.add(world,playerBase);
+  playerBase = Bodies.rectangle(200, 350, 180, 150, options);
+  World.add(world, playerBase);
 
-  //create player body
-  player = Bodies.rectangle(250,playerBase.position.y - 160,50,50);
-  World.add(world,player);
+  player = Bodies.rectangle(250, playerBase.position.y - 160, 50, 180, options);
+  World.add(world,player)
 
-
-
+  playerA = new PlayerArcher(320,250,100,100);
 }
 
 function draw() {
   background(backgroundImg);
 
-  //show the player image using image() function
-  image(baseimage,playerBase.position.x,playerBase.position.y,180,150);
-
-  //show the playerbase image using image() function
-  image(playerimage,player.position.x,player.position.y,50,180);
-
-
   Engine.update(engine);
+  image(baseimage,playerBase.position.x,playerBase.position.y,180,150)
+  image(playerimage,player.position.x,player.position.y,50,180)
 
   // Title
   fill("#FFFF");
   textAlign("center");
   textSize(40);
   text("EPIC ARCHERY", width / 2, 100);
+
+  playerA.display();
 }
+
+
+
+
